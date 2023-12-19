@@ -29,14 +29,18 @@ const Technician = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
-  
+
         const newVisibleTags = await response.json();
-        setTags(newVisibleTags);
+        
+        // Sort the tags alphabetically by name
+        const sortedTags = newVisibleTags.slice().sort((a, b) => a.name.localeCompare(b.name));
+        
+        setTags(sortedTags);
       } catch (error) {
         console.error('Error fetching visible tags:', error);
       }
     }, 1000);
-  
+
     // Cleanup the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);

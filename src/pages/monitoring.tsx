@@ -26,7 +26,11 @@ const Monitoring = () => {
       }
 
       const allTags = await response.json();
-      setTagsData(allTags);
+
+      // Sort the tags alphabetically by name
+      const sortedTags = allTags.slice().sort((a, b) => a.name.localeCompare(b.name));
+
+      setTagsData(sortedTags);
     } catch (error) {
       console.error('Error fetching all tags:', error);
     }
