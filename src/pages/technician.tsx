@@ -1,11 +1,10 @@
 // technician.tsx
 import { useSession } from 'next-auth/react';
-import { PrismaClient } from '@prisma/client';
 import * as React from 'react';
-
+import { useState, useEffect } from 'react';
 import {
   ChakraProvider,
-  Flex, // Import Flex component
+  Flex,
   Table,
   Thead,
   Tbody,
@@ -19,26 +18,49 @@ import {
 } from '@chakra-ui/react';
 import Navbar from './nav';
 
-const prisma = new PrismaClient();
-
-const Technician = ({ visibleTags }) => {
+const Technician = () => {
   const { data: sessionData } = useSession();
+  const [tags, setTags] = useState([]);
 
-  // Check if sessionData is defined
-  const discordUsername = sessionData?.user?.name as string;
+  const fetchVisibleTags = async () => {
+    try {
+      const response = await fetch('/api/getVisibleTags');
+      const newVisibleTags = await response.json();
+      setTags(newVisibleTags);
+    } catch (error) {
+      console.error('Error fetching visible tags:', error);
+    }
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      try {
+        const response = await fetch('/api/getVisibleTags');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+  
+        const newVisibleTags = await response.json();
+        setTags(newVisibleTags);
+      } catch (error) {
+        console.error('Error fetching visible tags:', error);
+      }
+    }, 1000);
+  
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   if (!sessionData) {
-    // Redirect or handle unauthorized access
     return <div>You are not authorized to view this page.</div>;
   }
 
   return (
     <>
       <Navbar discordUsername={sessionData.user?.name} />
-
       <Flex justify="center" align="center" h="100vh">
         <TableContainer>
-          <Table variant='simple'>
+          <Table variant="simple">
             <TableCaption>Visible Tags Information</TableCaption>
             <Thead>
               <Tr>
@@ -48,7 +70,7 @@ const Technician = ({ visibleTags }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {visibleTags.map((tag, index) => (
+              {tags.map((tag, index) => (
                 <StyledTr key={tag.id} isOdd={index % 2 !== 0}>
                   <Td>{tag.name}</Td>
                   <Td>{tag.state}</Td>
@@ -72,44 +94,8 @@ const Technician = ({ visibleTags }) => {
 
 const StyledTr = chakra(Tr, {
   baseStyle: (props) => ({
-    bg: props.isOdd ? 'blue.100' : 'white', // Set background color based on odd/even index
+    bg: props.isOdd ? 'blue.100' : 'white',
   }),
 });
-
-export async function getServerSideProps() {
-  try {
-    // Fetch visible tags from the database
-    const visibleTags = await prisma.tags.findMany({
-      where: {
-        visible: true,
-      },
-      select: {
-        id: true,
-        name: true,
-        state: true,
-        date: true,
-      },
-    });
-
-    // Convert Date objects to strings
-    const formattedVisibleTags = visibleTags.map((tag) => ({
-      ...tag,
-      date: tag.date.toISOString(),
-    }));
-
-    return {
-      props: {
-        visibleTags: formattedVisibleTags,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching visible tags:', error);
-    return {
-      props: {
-        visibleTags: [],
-      },
-    };
-  }
-}
 
 export default Technician;
