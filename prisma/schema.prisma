@@ -71,3 +71,12 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+
+model Tags {
+  id    Int     @id @default(autoincrement())
+  name  String @unique
+  state String
+  date DateTime @default(now())
+  visible Boolean @default(false)
+}

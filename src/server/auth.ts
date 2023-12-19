@@ -7,7 +7,7 @@ import {
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
-import { env } from "projetindus/env";
+import { env } from "projetindus/env.mjs";
 import { db } from "projetindus/server/db";
 
 /**

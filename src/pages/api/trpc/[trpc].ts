@@ -1,6 +1,6 @@
 import { createNextApiHandler } from "@trpc/server/adapters/next";
 
-import { env } from "projetindus/env";
+import { env } from "projetindus/env.js";
 import { appRouter } from "projetindus/server/api/root";
 import { createTRPCContext } from "projetindus/server/api/trpc";
 
