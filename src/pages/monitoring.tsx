@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 
 const Monitoring = () => {
+
   const { data: sessionData } = useSession();
   const [tagsData, setTagsData] = useState([]);
 
@@ -98,7 +99,11 @@ const Monitoring = () => {
       console.error('Error updating tag visibility:', error);
     }
   };
-
+  
+  if (!sessionData ) {
+    return <div>You are not authorized to view this page.</div>;
+  }
+  else {
   return (
     <>
       <Navbar discordUsername={sessionData?.user?.name || 'loict1'} />
@@ -142,5 +147,6 @@ const Monitoring = () => {
     </>
   );
 };
+}
 
 export default Monitoring;

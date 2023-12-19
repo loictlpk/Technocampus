@@ -45,10 +45,11 @@ const Technician = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  if (!sessionData) {
+  if (!sessionData ) {
     return <div>You are not authorized to view this page.</div>;
   }
-
+  else {
+    
   return (
     <>
       <Navbar discordUsername={sessionData.user?.name} />
@@ -85,6 +86,8 @@ const Technician = () => {
     </>
   );
 };
+  }
+
 
 const StyledTr = chakra(Tr, {
   baseStyle: (props) => ({
