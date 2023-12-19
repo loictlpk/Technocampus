@@ -56,9 +56,12 @@ const Technician = () => {
   return (
     <>
       <Navbar discordUsername={sessionData.user?.name} />
-      <HelloButton message="Option 1"/>
-
-
+      <HelloButton color="red" />
+      <HelloButton color="green" />
+      <HelloButton color="yellow" />
+      <HelloButton color="white" />
+      <HelloButton color="" />
+      
       <Flex justify="center" align="center" h="100vh">
         <TableContainer>
           <Table variant="simple">
