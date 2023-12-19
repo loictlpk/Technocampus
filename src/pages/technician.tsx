@@ -2,6 +2,8 @@
 import { useSession } from 'next-auth/react';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import mqtt from 'mqtt';
+import HelloButton from '../components/button';
 import {
   ChakraProvider,
   Flex,
@@ -15,6 +17,7 @@ import {
   TableCaption,
   Tfoot,
   chakra,
+  Button,
 } from '@chakra-ui/react';
 import Navbar from './nav';
 
@@ -53,6 +56,8 @@ const Technician = () => {
   return (
     <>
       <Navbar discordUsername={sessionData.user?.name} />
+      <HelloButton />
+
       <Flex justify="center" align="center" h="100vh">
         <TableContainer>
           <Table variant="simple">
@@ -91,7 +96,7 @@ const Technician = () => {
 
 const StyledTr = chakra(Tr, {
   baseStyle: (props) => ({
-    bg: props.isOdd ? 'blue.100' : 'white',
+    bg: props ? 'blue.100' : 'white',
   }),
 });
 
