@@ -22,16 +22,6 @@ const Technician = () => {
   const { data: sessionData } = useSession();
   const [tags, setTags] = useState([]);
 
-  const fetchVisibleTags = async () => {
-    try {
-      const response = await fetch('/api/getVisibleTags');
-      const newVisibleTags = await response.json();
-      setTags(newVisibleTags);
-    } catch (error) {
-      console.error('Error fetching visible tags:', error);
-    }
-  };
-
   useEffect(() => {
     const intervalId = setInterval(async () => {
       try {
