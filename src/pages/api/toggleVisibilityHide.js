@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
       const updatedTag = await prisma.tags.update({
         where: { id: tagId },
-        data: { visible: true }, // Toggle the visibility logic as needed
+        data: { visible: false }, // Toggle the visibility logic as needed
       });
 
       return res.status(200).json(updatedTag);

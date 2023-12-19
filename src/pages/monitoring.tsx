@@ -23,7 +23,7 @@ const Monitoring = ({ tagsData }) => {
     try {
       const response = await fetch('/api/toggleVisibility', {
         method: 'POST',
-        body: JSON.stringify({ tagId }), // Correctly stringify the payload
+        body: JSON.stringify({ tagId }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -32,7 +32,32 @@ const Monitoring = ({ tagsData }) => {
       if (response.ok) {
         const updatedTag = await response.json();
 
-        // Update the state with the modified tag
+        setUpdatedTags((prevTags) =>
+          prevTags.map((tag) =>
+            tag.id === updatedTag.id ? { ...tag, visible: updatedTag.visible } : tag
+          )
+        );
+      } else {
+        console.error('Error updating tag visibility:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating tag visibility:', error);
+    }
+  };
+
+  const handleToggleVisibilityHide = async (tagId) => {
+    try {
+      const response = await fetch('/api/toggleVisibilityHide', {
+        method: 'POST',
+        body: JSON.stringify({ tagId }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const updatedTag = await response.json();
+
         setUpdatedTags((prevTags) =>
           prevTags.map((tag) =>
             tag.id === updatedTag.id ? { ...tag, visible: updatedTag.visible } : tag
@@ -51,7 +76,6 @@ const Monitoring = ({ tagsData }) => {
       <Navbar discordUsername={sessionData?.user?.name || 'loict1'} />
       <h1>Monitoring page</h1>
 
-      {/* Centered Chakra UI Table with Spacing */}
       <Center>
         <Box margin="4">
           <Table variant="simple">
@@ -78,7 +102,15 @@ const Monitoring = ({ tagsData }) => {
                       onClick={() => handleToggleVisibility(tag.id)}
                       colorScheme={tag.visible ? 'red' : 'green'}
                     >
-                      {tag.visible ? 'Hide' : 'Show'}
+                      SHOW
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Button
+                      onClick={() => handleToggleVisibilityHide(tag.id)}
+                      colorScheme={tag.visible ? 'red' : 'green'}
+                    >
+                      HIDE
                     </Button>
                   </Td>
                 </Tr>

@@ -17,9 +17,7 @@ mqttClient.on("connect", () => {
 mqttClient.on("message", async (topic, message) => {
   topic = topic.replace("/groupe4/", "");
   console.log(topic, message.toString());
-  var messageString = message.toString().split("/");
-  if (messageString.length > 1) return;
-  console.log(topic, messageString[0]);
+
   await db.tags.upsert({
     where: {
       name: topic,
