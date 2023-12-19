@@ -49,7 +49,7 @@ const HelloButton: React.FC = ({color}) => {
   };
 
   return (
-    <button onClick={envoyerHello}>Envoyer "{color}"</button>
+    <button className="bg-[#64748b] hover:bg-[#1e293b] text-white py-2 px-4 rounded-full" onClick={envoyerHello}>Envoyer "{color}"</button>
   );
 };
 

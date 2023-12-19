@@ -1,23 +1,9 @@
 import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 import Navbar from './nav';
-import { Card, Typography } from "@material-tailwind/react";
-
-import { PrismaClient } from '@prisma/client';
-// import {
-//   Table,
-//   Thead,
-//   Tbody,
-//   Tr,
-//   Th,
-//   Td,
-//   Center,
-//   Box,
-//   Button,
-// } from '@chakra-ui/react';
+import { Card } from "@material-tailwind/react";
 
 const Monitoring = () => {
-
   const { data: sessionData } = useSession();
   const [tagsData, setTagsData] = useState([]);
 
@@ -43,7 +29,7 @@ const Monitoring = () => {
     // Fetch all tags when the component mounts
     fetchAllTags();
 
-    // Fetch all tags every 1 seconds 
+    // Fetch all tags every 1 second 
     const intervalId = setInterval(fetchAllTags, 1000);
 
     // Cleanup the interval on component unmount
@@ -101,60 +87,62 @@ const Monitoring = () => {
       console.error('Error updating tag visibility:', error);
     }
   };
-  
-  if (!sessionData ) {
-    return <div>You are not authorized to view this page.</div>;
-  }
-  else {
-  return (
-    <>
-      <Navbar discordUsername={sessionData?.user?.name || 'loict1'} />
-      <Card className="h-full w-full overflow-scroll">
-        <table className="w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>State</th>
-              <th>Date</th>
-              <th>Visible</th>
-              <th>Action</th>
-              <th>Action</th> 
-            </tr>
-          </thead>
-          <tbody>
-            {tagsData.map((tag) => (
-              <tr key={tag.id}>
-                <td>{tag.id}</td>
-                <td>{tag.name}</td>
-                <td>{tag.state}</td>
-                <td>{new Date(tag.date).toISOString()}</td>
-                <td>{tag.visible.toString()}</td>
-                <td>
-                  <button
-                    className="bg-[#374151] hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleToggleVisibility(tag.id)}
-                  >
-                    SHOW
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="bg-[#374151] hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleToggleVisibilityHide(tag.id)}
-                  >
-                    HIDE
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Card>
-    </>
-  );
-};
 
-}
+  if (!sessionData) {
+    return <div>You are not authorized to view this page.</div>;
+  } else {
+    return (
+      <>
+        <Navbar discordUsername={sessionData?.user?.name || 'loict1'} />
+        <Card className="h-full w-full">
+          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div className="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+              <table className="w-full min-w-max table-auto text-left">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2">ID</th>
+                    <th className="px-4 py-2">Name</th>
+                    <th className="px-4 py-2">State</th>
+                    <th className="px-4 py-2">Date</th>
+                    <th className="px-4 py-2">Visible</th>
+                    <th className="px-4 py-2">Action</th>
+                    <th className="px-4 py-2">Action</th> 
+                  </tr>
+                </thead>
+                <tbody>
+                  {tagsData.map((tag) => (
+                    <tr key={tag.id}>
+                      <td className="border px-4 py-2">{tag.id}</td>
+                      <td className="border px-4 py-2">{tag.name}</td>
+                      <td className="border px-4 py-2">{tag.state}</td>
+                      <td className="border px-4 py-2">{new Date(tag.date).toISOString()}</td>
+                      <td className="border px-4 py-2">{tag.visible.toString()}</td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-[#374151] hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() => handleToggleVisibility(tag.id)}
+                        >
+                          SHOW
+                        </button>
+                      </td>
+                      <td className="border px-4 py-2">
+                        <button
+                          className="bg-[#374151] hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() => handleToggleVisibilityHide(tag.id)}
+                        >
+                          HIDE
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Card>
+      </>
+    );
+  }
+};
 
 export default Monitoring;
