@@ -15,7 +15,7 @@ const HelloButton: React.FC = ({color}) => {
     mqttClient.on("connect", () => {
       console.log("connected");
 
-      
+      // r:g:b
       switch (color) {
         case "red":
           mqttClient.publish(`/groupe4/evt/sif412_L1_in1`, "1");
