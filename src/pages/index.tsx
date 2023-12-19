@@ -37,20 +37,21 @@ export default function Home() {
           <h1 className="text-5xl font-extrabold tracking-tight text-black sm:text-[5rem]">
             Bienvenue!
           </h1>
-          <>
-          </>
+          <h2 className="font-bold tracking-tight text-black sm:text-[1rem] text-center">
+            Dans le cadre du cours de projet industriel, Technocampus nous a ouvert ses portes vers la miniusine.<br/>
+            Nos compétences en programmation ont été mises en avant pour mener à bien ce projet.</h2>
           <div className="flex flex-col items-center gap-2">
             <AuthShowcase />
             {discordUsername === "loict1" && ( // Only render buttons if the user is "loict1"
               <>
                 <button
-                  className="rounded-full bg-black/10 px-10 py-3 font-semibold text-black no-underline transition hover:bg-grey/20"
+                  className="bg-[#64748b] hover:bg-[#1e293b] text-white py-2 px-4 rounded-full"
                   onClick={handleAdminPage}
                 >
                   Go to Monitoring
                 </button>
                 <button
-                  className="rounded-full bg-black/10 px-10 py-3 font-semibold text-black no-underline transition hover:bg-grey/20"
+                  className="bg-[#64748b] hover:bg-[#1e293b] text-white py-2 px-4 rounded-full"
                   onClick={handleTechnicianPage}
                 >
                   Go to user page
@@ -73,7 +74,7 @@ function AuthShowcase() {
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
       </p>
       <button
-        className="rounded-full bg-black/10 px-10 py-3 font-semibold text-black no-underline transition hover:bg-grey/20"
+        className="bg-[#64748b] hover:bg-[#1e293b] text-white py-2 px-4 rounded-full"
         onClick={sessionData ? () => void signOut() : () => void signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}

@@ -3,36 +3,37 @@ import Link from "next/link";
 
 const Navbar = ({ discordUsername }) => {
   const isMonitoringEnabled = discordUsername === "loict1";
-
+  
   return (
     <>
-      <div className="w-full h-20 bg-black sticky top-0">
-        <div className="container mx-auto px-4 h-full">
-          <div className="flex justify-between items-center h-full">
-            <ul className="hidden md:flex gap-x-6 text-white">
-              <li>
-                <Link href="/">
-                  <p>Accueil</p>
-                </Link>
+      <nav
+        class="block w-full max-w-screen-xl px-6 py-3 mx-auto text-white bg-[#64748b] border shadow-md rounded-xl border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
+        <div class="flex items-center justify-between text-blue-gray-900">
+          <a href="/"
+            class="mr-4 block cursor-pointer py-1.5 font-sans text-base font-semibold leading-relaxed tracking-normal text-inherit antialiased">
+            Projet industriel
+          </a>
+          <div class="hidden lg:block">
+            <ul class="flex flex-col gap-2 my-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+              <li class="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
+              {isMonitoringEnabled && (
+                <a href="/monitoring" class="flex items-center transition-colors hover:text-black">
+                  Monitoring
+                </a>
+              )}
               </li>
+              <li class="block p-1 font-sans text-sm antialiased font-medium leading-normal text-blue-gray-900">
               {isMonitoringEnabled && (
-                <li>
-                  <Link href="/monitoring">
-                    <p>Monitoring</p>
-                  </Link>
-                </li>
+                <a href="/technician" class="flex items-center transition-colors hover:text-black">
+                  Technician
+                </a>
               )}
-              {isMonitoringEnabled && (
-                <li>
-                  <Link href="/technician">
-                    <p>Technician</p>
-                  </Link>
-                </li>
-              )}
+              </li>
+              
             </ul>
           </div>
         </div>
-      </div>
+      </nav>
     </>
   );
 };
