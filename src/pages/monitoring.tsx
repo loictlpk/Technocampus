@@ -19,6 +19,9 @@ const Monitoring = ({ tagsData }) => {
   const { data: sessionData } = useSession();
   const [updatedTags, setUpdatedTags] = useState(tagsData);
 
+
+
+  
   const handleToggleVisibility = async (tagId) => {
     try {
       const response = await fetch('/api/toggleVisibility', {
@@ -37,6 +40,8 @@ const Monitoring = ({ tagsData }) => {
             tag.id === updatedTag.id ? { ...tag, visible: updatedTag.visible } : tag
           )
         );
+
+        
       } else {
         console.error('Error updating tag visibility:', response.statusText);
       }
@@ -74,8 +79,6 @@ const Monitoring = ({ tagsData }) => {
   return (
     <>
       <Navbar discordUsername={sessionData?.user?.name || 'loict1'} />
-      <h1>Monitoring page</h1>
-
       <Center>
         <Box margin="4">
           <Table variant="simple">
@@ -100,7 +103,6 @@ const Monitoring = ({ tagsData }) => {
                   <Td>
                     <Button
                       onClick={() => handleToggleVisibility(tag.id)}
-                      colorScheme={tag.visible ? 'red' : 'green'}
                     >
                       SHOW
                     </Button>
@@ -108,7 +110,6 @@ const Monitoring = ({ tagsData }) => {
                   <Td>
                     <Button
                       onClick={() => handleToggleVisibilityHide(tag.id)}
-                      colorScheme={tag.visible ? 'red' : 'green'}
                     >
                       HIDE
                     </Button>
