@@ -1,18 +1,20 @@
 import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 import Navbar from './nav';
+import { Card, Typography } from "@material-tailwind/react";
+
 import { PrismaClient } from '@prisma/client';
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Center,
-  Box,
-  Button,
-} from '@chakra-ui/react';
+// import {
+//   Table,
+//   Thead,
+//   Tbody,
+//   Tr,
+//   Th,
+//   Td,
+//   Center,
+//   Box,
+//   Button,
+// } from '@chakra-ui/react';
 
 const Monitoring = () => {
 
@@ -107,46 +109,52 @@ const Monitoring = () => {
   return (
     <>
       <Navbar discordUsername={sessionData?.user?.name || 'loict1'} />
-      <Center>
-        <Box margin="4">
-          <Table variant="simple">
-            <Thead>
-              <Tr>
-                <Th>ID</Th>
-                <Th>Name</Th>
-                <Th>State</Th>
-                <Th>Date</Th>
-                <Th>Visible</Th>
-                <Th>Action</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {tagsData.map((tag) => (
-                <Tr key={tag.id}>
-                  <Td>{tag.id}</Td>
-                  <Td>{tag.name}</Td>
-                  <Td>{tag.state}</Td>
-                  <Td>{new Date(tag.date).toISOString()}</Td>
-                  <Td>{tag.visible.toString()}</Td>
-                  <Td>
-                    <Button onClick={() => handleToggleVisibility(tag.id)}>
-                      SHOW
-                    </Button>
-                  </Td>
-                  <Td>
-                    <Button onClick={() => handleToggleVisibilityHide(tag.id)}>
-                      HIDE
-                    </Button>
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
-      </Center>
+      <Card className="h-full w-full overflow-scroll">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>State</th>
+              <th>Date</th>
+              <th>Visible</th>
+              <th>Action</th>
+              <th>Action</th> 
+            </tr>
+          </thead>
+          <tbody>
+            {tagsData.map((tag) => (
+              <tr key={tag.id}>
+                <td>{tag.id}</td>
+                <td>{tag.name}</td>
+                <td>{tag.state}</td>
+                <td>{new Date(tag.date).toISOString()}</td>
+                <td>{tag.visible.toString()}</td>
+                <td>
+                  <button
+                    className="bg-[#374151] hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleToggleVisibility(tag.id)}
+                  >
+                    SHOW
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="bg-[#374151] hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={() => handleToggleVisibilityHide(tag.id)}
+                  >
+                    HIDE
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Card>
     </>
   );
 };
+
 }
 
 export default Monitoring;
