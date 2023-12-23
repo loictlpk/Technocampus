@@ -1,4 +1,3 @@
-// pages/api/getAllTags.js
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
       },
     });
 
-    // Convert Date objects to strings
+    // objet date en string
     const formattedAllTags = allTags.map((tag) => ({
       ...tag,
       date: tag.date.toISOString(),

@@ -72,7 +72,7 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-
+// Ajout d'une table tags dans la db
 model Tags {
   id    Int     @id @default(autoincrement())
   name  String @unique

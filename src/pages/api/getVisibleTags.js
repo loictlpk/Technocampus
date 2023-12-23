@@ -1,4 +1,3 @@
-// pages/api/getVisibleTags.js
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -17,7 +16,7 @@ export default async function handler(req, res) {
       },
     });
 
-    // Convert Date objects to strings
+    // date en chaine de caractères
     const formattedVisibleTags = visibleTags.map((tag) => ({
       ...tag,
       date: tag.date.toISOString(),

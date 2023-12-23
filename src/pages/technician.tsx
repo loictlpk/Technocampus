@@ -1,8 +1,8 @@
 import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
 import Navbar from './nav';
-import HelloButton from '../components/button';
-import { Card } from "@material-tailwind/react";  // Ajout de l'importation manquante
+import ColorButton from '../components/button';
+import { Card } from "@material-tailwind/react"; 
 
 const Technician = () => {
   const { data: sessionData } = useSession();
@@ -18,7 +18,7 @@ const Technician = () => {
 
         const newVisibleTags = await response.json();
         
-        // Sort the tags alphabetically by name
+        // Tri par ordre alphabétique
         const sortedTags = newVisibleTags.slice().sort((a, b) => a.name.localeCompare(b.name));
         
         setTags(sortedTags);
@@ -27,7 +27,7 @@ const Technician = () => {
       }
     }, 1000);
 
-    // Cleanup the interval on component unmount
+    // importe les tags lors d'un changement uniquement
     return () => clearInterval(intervalId);
   }, []);
 
@@ -39,11 +39,11 @@ const Technician = () => {
         <Navbar discordUsername={sessionData.user?.name} />
 
         <div className='flex justify-center mb-4'>
-          <HelloButton color="red" className="mx-auto" />
-          <HelloButton color="green" className="mx-auto" />
-          <HelloButton color="yellow" className="mx-auto" />
-          <HelloButton color="white" className="mx-auto" />
-          <HelloButton color="" className="mx-auto" />
+          <ColorButton color="red" className="mx-auto" />
+          <ColorButton color="green" className="mx-auto" />
+          <ColorButton color="yellow" className="mx-auto" />
+          <ColorButton color="white" className="mx-auto" />
+          <ColorButton color="" className="mx-auto" />
         </div>
 
         <Card className="h-full w-full">

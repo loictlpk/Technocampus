@@ -16,7 +16,7 @@ const Monitoring = () => {
 
       const allTags = await response.json();
 
-      // Sort the tags alphabetically by name
+      // Tri tag : alphabétique
       const sortedTags = allTags.slice().sort((a, b) => a.name.localeCompare(b.name));
 
       setTagsData(sortedTags);
@@ -26,13 +26,13 @@ const Monitoring = () => {
   };
 
   useEffect(() => {
-    // Fetch all tags when the component mounts
+    // Importation des tags pour valeur au démarrage
     fetchAllTags();
 
-    // Fetch all tags every 1 second 
+    // Importation des tags toutes les secondes
     const intervalId = setInterval(fetchAllTags, 1000);
 
-    // Cleanup the interval on component unmount
+    // importe les tags lors d'un changement uniquement
     return () => clearInterval(intervalId);
   }, []);
 

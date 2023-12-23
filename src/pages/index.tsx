@@ -4,6 +4,7 @@ import Navbar from "./nav";
 import router from "next/router";
 
 export default function Home() {
+  // Création d'une session
   const { data: sessionData } = useSession();
 
   const discordUsername = sessionData?.user?.name as string;
@@ -42,7 +43,7 @@ export default function Home() {
             Nos compétences en programmation ont été mises en avant pour mener à bien ce projet.</h2>
           <div className="flex flex-col items-center gap-2">
             <AuthShowcase />
-            {discordUsername === "loict1" && ( // Only render buttons if the user is "loict1"
+            {discordUsername === "loict1" && ( // Afficage des boutons uniquement lorsque loict1 est connecté (admin)
               <>
                 <button
                   className="bg-[#64748b] hover:bg-[#1e293b] text-white py-2 px-4 rounded-full"

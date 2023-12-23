@@ -1,4 +1,3 @@
-// pages/api/toggleVisibility.js
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -12,13 +11,13 @@ export default async function handler(req, res) {
       const tagId = body.tagId;
 
       if (!tagId) {
-        // Handle the case where tagId is missing
+        // Message erreur si tagId est manquant
         return res.status(400).json({ error: 'Missing tagId in the request body' });
       }
 
       const updatedTag = await prisma.tags.update({
         where: { id: tagId },
-        data: { visible: false }, // Toggle the visibility logic as needed
+        data: { visible: false }, // Sur l'élement dont l'id est ... initialisation de visble à false 
       });
 
       return res.status(200).json(updatedTag);

@@ -1,15 +1,15 @@
-// HelloButton.tsx
 import React from 'react';
 import mqtt, { Client, IClientOptions } from 'mqtt';
 
-const HelloButton: React.FC = ({color}) => {
-  const envoyerHello = () => {
+const ColorButton: React.FC = ({color}) => {
+  const envoyercClr = () => {
     const options: IClientOptions = {
       username: 'groupe4',
       password: 'groupe4',
       port: 9001,
     };
 
+    // en websocket car une page web ne prend pas en compte le "mqtt://""
     const mqttClient = mqtt.connect("ws://helhatechniquecharleroi.xyz", options);
 
     mqttClient.on("connect", () => {
@@ -49,8 +49,8 @@ const HelloButton: React.FC = ({color}) => {
   };
 
   return (
-    <button className="bg-[#64748b] hover:bg-[#1e293b] text-white py-2 px-4 rounded-full" onClick={envoyerHello}>Envoyer "{color}"</button>
+    <button className="bg-[#64748b] hover:bg-[#1e293b] text-white py-2 px-4 rounded-full" onClick={envoyercClr}>Envoyer "{color}"</button>
   );
 };
 
-export default HelloButton;
+export default ColorButton;
